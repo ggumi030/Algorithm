@@ -1,19 +1,11 @@
-import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 class Solution {
     public long solution(int a, int b) {
-        long answer = 0;
-        
-        if(a>b){
-            for(int i = b; i <= a; i++){
-                answer+=i;
-            }    
-        } else{
-            for(int i = a; i <= b; i++){
-                answer+=i;
+        if(a < b){
+            return LongStream.range(a,b+1).sum();
+        }else {
+            return LongStream.range(b,a+1).sum();
         }
-        
     }
-        return answer;
-}
 }
