@@ -7,9 +7,7 @@ class Solution {
         String[] nums = {"zero","one","two","three","four","five","six","seven","eight","nine"};
         
         for(String num : nums){
-            if(s.contains(num)){
-                s = s.replaceAll(num,String.valueOf(i));
-            }
+            s = s.replace(num,String.valueOf(i));
             i++;
         }
         
