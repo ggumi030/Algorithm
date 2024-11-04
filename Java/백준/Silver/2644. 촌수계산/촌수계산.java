@@ -47,10 +47,10 @@ public class Main{
 
             if(visited[n] == 0){
                 dfs(n, cnt+1);
-                if (answer != -1) return;
+                //if (answer != -1) return;
             }
         }
         
-        visited[idx] = 0;
+        //visited[idx] = 0;
     }
 }
