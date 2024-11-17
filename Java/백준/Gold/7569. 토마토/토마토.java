@@ -17,38 +17,26 @@ public class Main {
         int N = Integer.parseInt(st.nextToken()); 
         int H = Integer.parseInt(st.nextToken()); 
         
+        Queue<int[]> queue = new LinkedList<>();
         int[][][] box = new int[H][N][M];
+        boolean set = true;
         
         for (int i = 0; i < H; i++) {
             for (int j = 0; j < N; j++) {
                 st = new StringTokenizer(br.readLine());
                 for (int k = 0; k < M; k++) {
                     box[i][j][k] = Integer.parseInt(st.nextToken());
+                    if(box[i][j][k] == 0) set = false;
+                    if(box[i][j][k] == 1) queue.add(new int[]{i, j, k});
                 }
             }
         }
-        
-        boolean set = true;
-        
-        for (int i = 0; i < H; i++) {
-            for (int j = 0; j < N; j++) {
-                for (int k = 0; k < M; k++) {
-                    if(box[i][j][k] == 0) {
-                        set = false;
-                    }
-                }
-            }
-        }
-        
+
         if(set) {
             bw.write("0\n");
         } else{
-            int day = bfs(box, H, N, M);
-            if (day == -1) {
-                bw.write("-1\n");
-            } else {
-                bw.write(day + "\n");
-            }
+            int day = bfs(box, queue, H, N, M);
+            bw.write(day == -1 ? "-1\n" : day + "\n");
         }
         
         bw.flush();
@@ -56,28 +44,14 @@ public class Main {
         br.close();
     }
     
-    public static int bfs(int[][][] box, int H, int N, int M) {
-        boolean[][][] visited = new boolean[H][N][M];
+    public static int bfs(int[][][] box, Queue<int[]> queue, int H, int N, int M) {
         int day = 0;
         int[] dh = {-1, 1, 0, 0, 0, 0};
         int[] dn = {0, 0, -1, 1, 0, 0};
         int[] dm = {0, 0, 0, 0, -1, 1};
-        Queue<int[]> queue = new LinkedList<>();
-        
-        for (int i = 0; i < H; i++) {
-            for (int j = 0; j < N; j++) {
-                for (int k = 0; k < M; k++) {
-                    if (box[i][j][k] == 1) {
-                        visited[i][j][k] = true;
-                        queue.add(new int[]{i, j, k});
-                    }
-                }
-            }
-        }
         
         while (!queue.isEmpty()) {
             int size = queue.size();
-            int change = 0;
             
             for (int i = 0; i < size; i++) {
                 int[] point = queue.poll();
@@ -90,20 +64,14 @@ public class Main {
                     int nn = n + dn[d];
                     int nm = m + dm[d];
                     
-                    if (nh >= 0 && nh < H && nn >= 0 && nn < N && nm >= 0 && nm < M) {
-                        if (!visited[nh][nn][nm] && box[nh][nn][nm] == 0) {
-                            visited[nh][nn][nm] = true;
-                            box[nh][nn][nm] = 1;
-                            queue.add(new int[]{nh, nn, nm});
-                            change++;
-                        }
+                    if (nh >= 0 && nh < H && nn >= 0 && nn < N && nm >= 0 && nm < M && box[nh][nn][nm] == 0) {  
+                        box[nh][nn][nm] = 1;
+                        queue.add(new int[]{nh, nn, nm});
                     }
                 }
             }
             
-            if(change != 0) {
-                day++;   
-            }  
+            if(!queue.isEmpty()) day++;     
         }
         
         for (int i = 0; i < H; i++) {
