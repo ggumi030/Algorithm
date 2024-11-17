@@ -6,15 +6,11 @@ class Solution {
         int width = yellow;
         
         while(true) {
-            if(brown == (height + 2) * (width + 2) - yellow) {
+            if(yellow % height == 0 && brown == (height + 2) * (width + 2) - yellow) {
                 break;
-            } else {
-                height++;
-                while(yellow % height != 0) {
-                    height++;   
-                }
-                width = yellow / height;
             }
+            height++;
+            width = yellow / height;
         }
     
         answer[0] = width + 2;
