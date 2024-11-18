@@ -13,12 +13,8 @@ public class Main{
         long cat = 2L;
         long action = 2;
         
-        if(N == 0) {
-            bw.write("0\n");
-        } else if(N == 1) {
-            bw.write("1\n");
-        } else if(N == 2) {
-            bw.write("2\n");
+        if(N < 3) {
+            bw.write(N + "\n");
         } else{
             while(N > cat) {
                 cat *= 2;
