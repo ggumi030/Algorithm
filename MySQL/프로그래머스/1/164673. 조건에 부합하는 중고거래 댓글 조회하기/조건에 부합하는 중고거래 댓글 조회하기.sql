@@ -1,0 +1,13 @@
+-- 코드를 입력하세요
+SELECT 
+    board.TITLE, 
+    board.BOARD_ID, 
+    reply.REPLY_ID, 
+    reply.WRITER_ID, 
+    reply.contents AS CONTENTS, 
+    DATE_FORMAT(reply.CREATED_DATE, '%Y-%m-%d') AS CREATED_DATE
+FROM USED_GOODS_BOARD AS board
+INNER JOIN USED_GOODS_REPLY AS reply
+ON board.BOARD_ID = reply.BOARD_ID
+WHERE board.CREATED_DATE BETWEEN '2022-10-01' AND '2022-10-31'
+ORDER BY reply.CREATED_DATE, board.TITLE ASC
